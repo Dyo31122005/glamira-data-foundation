@@ -1,0 +1,56 @@
+{
+  "project": "Project 05 - Data Collection & Storage Foundation",
+  "author": "Nguyen Minh Dat",
+  "date": "April 2026",
+  "infrastructure": {
+    "gcp_project": "project-5-unigap",
+    "gcs_bucket": "raw_glamira_dat3112",
+    "vm": "glamira-vm",
+    "region": "asia-southeast1",
+    "disk_gb": 100
+  },
+  "raw_data": {
+    "source_file": "glamira_ubl_oct2019_nov2019.tar.gz",
+    "mongodb_database": "countly",
+    "mongodb_collection": "summary",
+    "total_events": 41432473,
+    "time_range": "Oct - Nov 2019",
+    "total_stores": 85
+  },
+  "task4_ip_geolocation": {
+    "script": "ip_location.py",
+    "total_unique_ips": 3239628,
+    "errors": 0,
+    "output_files": [
+      "ip_location.csv",
+      "mongodb: countly.ip_location",
+      "bigquery: glamira_raw.ip_location"
+    ],
+    "top_countries": {
+      "Germany": 348555,
+      "United Kingdom": 249294,
+      "United States": 222893,
+      "France": 215713,
+      "Italy": 153396
+    }
+  },
+  "task5_product_collection": {
+    "script": "get_products.py",
+    "total_records_before_dedup": 68377,
+    "unique_products": 19417,
+    "products_with_name": 19282,
+    "coverage_percent": 99.3,
+    "output_files": [
+      "products_to_crawl_1.csv",
+      "products_final_v2.csv",
+      "bigquery: glamira_raw.products_full"
+    ]
+  },
+  "data_quality": {
+    "total_events": {"expected": "~41M", "actual": 41432473, "status": "PASS"},
+    "unique_ips": {"expected": "~3.2M", "actual": 3239628, "status": "PASS"},
+    "unique_products": {"expected": ">7000", "actual": 19417, "status": "PASS"},
+    "name_coverage": {"expected": ">90%", "actual": "99.3%", "status": "PASS"},
+    "ip_errors": {"expected": 0, "actual": 0, "status": "PASS"}
+  }
+}
