@@ -1,0 +1,195 @@
+nohup: ignoring input
+Tổng sản phẩm cần crawl: 7081
+[163/7081] 100314: Women's Wedding Ring Happiness Drops 5 mm
+[191/7081] 92708: Men's Ring Classic Fame 3 mm
+[273/7081] 103058: Women's Anklet Yaricelly
+[291/7081] 107901: Nhẫn cưới Endless Love 5 mm
+[302/7081] 97816: Engagement Ring Kabena
+[512/7081] 93040: Classic Route 2 mm
+[541/7081] 89437: GLAMIRA Yüzük Amber
+[736/7081] 99842: Bông tai nữ Majella
+[883/7081] 101576: Kid's Earring Eilonwy
+[897/7081] 87719: Nhẫn cưới Sense Energy
+[916/7081] 104177: GLAMIRA Ring Jadora
+[964/7081] 102489: Women's Bracelet Willow
+[1040/7081] 92252: Nhẫn đính hôn Queen
+[1072/7081] 96827: Amazing Dimension 8mm
+[1084/7081] 91761: GLAMIRA Ring Perlina
+[1106/7081] 94889: Men's Wedding Ring Brilliant Set 6mm
+[1259/7081] 106266: Erkek Yüzük Strong Love 10 mm
+[1262/7081] 101855: GLAMIRA Ring Jakalyn
+[1263/7081] 101894: GLAMIRA Ring Miandra
+[1269/7081] 101885: GLAMIRA Ring Mersadie
+[1326/7081] 90241: GLAMIRA Yüzük Edda
+[1419/7081] 106135: Women's Wedding Ring Exotic Balance
+[1453/7081] 98036: Bông tai nữ Amedee
+[1479/7081] 104050: Bông tai nữ Mikuela
+[1480/7081] 101864: GLAMIRA Ring Jeilarie
+[1485/7081] 95694: GLAMIRA Earring Circulo
+[1492/7081] 101851: GLAMIRA Ring Jahmelis
+[1504/7081] 103139: GLAMIRA Ring Etheldra
+[1520/7081] 103102: Engagement Ring Alazre
+[1521/7081] 101882: GLAMIRA Ring Melisenda
+[1523/7081] 95702: GLAMIRA Earring Maly
+[1573/7081] 109015: Kadın Yüzük Alluring Light 10 mm
+[1574/7081] 103463: Engagement Ring Bernie
+[1593/7081] 96692: GLAMIRA Earring Kubus
+[1608/7081] 98444: GLAMIRA Ring Mahamonina
+[1618/7081] 101849: GLAMIRA Ring Anjali
+[1636/7081] 101866: GLAMIRA Ring Jelisa
+[1683/7081] 97503: GLAMIRA Earring Laterem
+[1691/7081] 96816: Nhẫn cưới Amazing Dimension Basic
+[1708/7081] 96693: GLAMIRA Earring Lottie
+[1718/7081] 104236: Women's Pendant Armetrice
+[1724/7081] 92451: Women's Earring Rossella
+[1763/7081] 105838: Unique Paradise 8 mm
+[1776/7081] 96503: Nhẫn cưới Alluring Balance 3 mm
+[1872/7081] 105525: Nhẫn cưới Mystic Swirl 6 mm
+[1873/7081] 104656: Pure Valentine 3 mm
+[1875/7081] 105089: Nhẫn cưới Pure Way 4 mm
+[1876/7081] 90408: GLAMIRA Earring Lalita
+[1883/7081] 93004: Classic Story 7 mm
+[1976/7081] 97051: Precious Treasure 10mm
+[2033/7081] 98263: Engagement Ring Brigida
+[2072/7081] 100484: Erkek Yüzük Exotic Night 8 mm
+[2095/7081] 90934: Engagement Ring Penthe 0.25 crt
+[2103/7081] 98251: Engagement Ring Bernarda
+[2170/7081] 92558: Classic Way 2mm
+[2247/7081] 100483: Exotic Night 8 mm
+[2283/7081] 103088: Engagement Ring Merollia
+[2321/7081] 110648: GLAMIRA Ring Misha
+[2333/7081] 92216: Nhẫn đính hôn Nery
+[2349/7081] 95664: GLAMIRA Pendant Triangulo
+[2364/7081] 93173: Classic Reality 7mm
+[2368/7081] 92831: Nhẫn Nam Classic Fortune 9mm
+[2465/7081] 92835: Men's Ring Classic Tour 3mm
+[2469/7081] 105871: Nhẫn cưới Unique Way 4 mm
+[2473/7081] 95773: Heavenly Dream 3mm
+[2481/7081] 92889: Classic Tour 3mm
+[2489/7081] 89565: Women's Necklace Bessie
+[2555/7081] 99988: Nhẫn đính hôn Girona
+[2560/7081] 91162: Women's Necklace Seraphic
+[2585/7081] 93037: Classic Song 8mm
+[2586/7081] 98079: Kadın Yüzük White Shell 8 mm
+[2598/7081] 105873: Nhẫn cưới Unique Way 6 mm
+[2618/7081] 92391: Engagement Ring Berdina
+[2637/7081] 97458: Women's Bracelet Fernereso
+[2690/7081] 92976: Women's ring Classic Tour 3mm
+[2774/7081] 106979: Erkek Yüzük Golden Dream 10 mm
+[2779/7081] 101644: Kid's Earring Dalita
+[2788/7081] 96609: GLAMIRA Ring Armanie
+[2796/7081] 97228: Men's Wedding Ring Amazing Grace 5mm
+[2852/7081] 92953: Classic Tune 3 mm
+[2929/7081] 97095: White Felicity 10mm
+[2954/7081] 105539: Nhẫn cưới nam Mystic Swirl 5 mm
+[3137/7081] 103347: Nhẫn GLAMIRA Malison
+[3176/7081] 91010: Engagement Ring Hayley 0.62crt
+[3223/7081] 102286: Women's Earring Ahebban
+[3318/7081] 95060: Anillo de compromiso Alina 3.0crt
+[3375/7081] 93530: Men's Ring Classic Power 3mm
+[3379/7081] 89463: GLAMIRA Yüzük Heather
+[3389/7081] 99951: GLAMIRA Pendant Soledad
+[3390/7081] 109522: Women's Pendant Udonis
+[3554/7081] 110616: Women's Pendant Cristi
+[3564/7081] 110504: Women's Pendant Dulcinia
+[3677/7081] 92463: Women's Pendant Tania
+[3731/7081] 100081: Women's Earring Bihine
+[3764/7081] 99010: ALIŞVERİŞ SEPETİNİZ BOŞ
+[3783/7081] 96803: GLAMIRA Necklace Libelula
+[3826/7081] 97428: Women's Pendant Lunes
+[3832/7081] 98489: Shopping Bag is Empty
+[3861/7081] 97311: Wedding Ring Mystic Secret 6 mm
+[3898/7081] 109463: Women's Necklace Cabrilla
+[3925/7081] 103037: Women's Anklet Wintania
+[3956/7081] 96762: GLAMIRA Pendant Diamondcase
+[4100/7081] 90460: ALIŞVERİŞ SEPETİNİZ BOŞ
+[4115/7081] 107568: Erkek Yüzük Amazing Charm 8 mm
+[4117/7081] 109834: Shopping Bag is Empty
+[4137/7081] 109523: Women's Necklace Valaysia
+[4155/7081] 90426: Women's Pendant Olena
+[4177/7081] 102664: Women's Earring Liyesha Ø6 mm
+[4189/7081] 107463: Women's Wedding Ring Bright Fame
+[4230/7081] 110472: Colgante para hombre Tony
+[4253/7081] 97012: Men's Wedding Ring Great Sensational
+[4292/7081] 101816: Men's Ring Silver & Diamonds Twice
+[4321/7081] 97077: Women's ring White Felicity 3mm
+[4343/7081] 102141: Men's Ring Silver Shine
+[4363/7081] 96774: GLAMIRA Necklace Gemelo
+[4586/7081] 98512: GLAMIRA Nose Pin Gorawen
+[4751/7081] 101814: Shopping Bag is Empty
+[4833/7081] 102887: GLAMIRA Ring Kaulini Ø6 mm
+[4868/7081] 93258: Shopping Bag is Empty
+[4915/7081] 92403: Women's Earring Alberta
+[4932/7081] 108124: Nhẫn cưới nữ Charismatic Beauty 5 mm
+[4984/7081] 90285: GLAMIRA Yüzük Zinnia
+[5027/7081] 91291: Nhẫn cưới nam Ornate Chic
+[5057/7081] 109830: Women's Pendant Keila
+[5063/7081] 102692: Bông tai nữ Lajoya Ø8 mm
+[5094/7081] 102899: Nhẫn GLAMIRA Liomar Ø6 mm
+[5097/7081] 99912: Mặt Dây Chuyền GLAMIRA Brisa
+[5106/7081] 95340: Nhẫn cưới Heavenly Sparkle 5 mm
+[5202/7081] 110229: Women's Bracelet Andree
+[5207/7081] 103323: Nhẫn đính hôn Alvisha
+[5212/7081] 109855: Bông tai nữ Janika
+[5295/7081] 107595: Nhẫn Nam Authentic Line 10 mm
+[5300/7081] 100264: Nhẫn Nam Sensual Night 10 mm
+[5304/7081] 107706: Nhẫn Nam Brilliant Love 10 mm
+[5316/7081] 98798: Nhẫn Nam Pure Always 10 mm
+[5322/7081] 88957: Nhẫn cưới nam Pure Lines
+[5344/7081] 95456: Nhẫn cưới nam Pretty Shine 6mm
+[5350/7081] 110261: Vòng tay nữ Hang - 1 charm
+[5352/7081] 106359: Nhẫn cưới Secret Garden 8 mm
+[5357/7081] 93569: Nhẫn Nam Classic Progress 7mm
+[5373/7081] 105572: Mystic Unity 10 mm
+[5374/7081] 101444: GLAMIRA Anillo Aretina
+[5389/7081] 102482: Vòng tay nữ Talu
+[5442/7081] 100920: Vòng Tay GLAMIRA Marakeil
+[5570/7081] 90463: Men's Wedding Ring Celtic Shamrock
+[5596/7081] 104365: Women's Pendant Doane
+[5682/7081] 101098: Forever Love 10 mm
+[5690/7081] 102443: Women's Bracelet Dilbash
+[5779/7081] 103366: Engagement Ring Elinore
+[5798/7081] 103143: Engagement Ring Inabelle
+[5839/7081] 109457: Women's Pendant Birute
+[5876/7081] 105527: Wedding Ring Mystic Swirl 8 mm
+[5970/7081] 98315: GLAMIRA Pendant Secret
+[6144/7081] 106084: Nhẫn cưới Magical Love 6 mm
+[6161/7081] 103450: Nhẫn đính hôn Federica 1.00 crt
+[6170/7081] 93562: Nhẫn Nam Classic Flower 9 mm
+[6190/7081] 104089: GLAMIRA Ring Delcine
+[6206/7081] 86172: GLAMIRA - Your Online Shop for Gold, Diamond and Wedding Jewellery
+[6258/7081] 99930: GLAMIRA Pendant Lynzie
+[6277/7081] 91872: Women's Pendant Austere
+[6341/7081] 96251: Nhẫn cưới nữ Pure Beauty 6 mm
+[6395/7081] 103022: Women's Anklet Angarika
+[6402/7081] 101881: GLAMIRA Ring Melfina
+[6405/7081] 95610: GLAMIRA Ring Hark
+[6425/7081] 91186: Glamira Broş Circinal
+[6462/7081] 97653: GLAMIRA Pendant Nicoline
+[6464/7081] 96776: GLAMIRA Pendant Gotas
+[6468/7081] 91191: Glamira Broş Fibula
+[6494/7081] 97703: GLAMIRA Hoop Pendant Dione
+[6495/7081] 97578: GLAMIRA Bead Necklace Ilithiya
+[6497/7081] 96819: GLAMIRA Necklace Pafundesi
+[6573/7081] 108787: Nhẫn cưới Magic Truth 5 mm
+[6576/7081] 99566: Hoa tai nam Wulfric
+[6615/7081] 103478: Anillo de compromiso Jimena
+[6660/7081] 99752: Khuy Măng Sét Kelven
+[6671/7081] 99704: Nhẫn cưới nam Golden Soul 8 mm
+[6685/7081] 102529: GLAMIRA - Your Online Shop for Gold, Diamond and Wedding Jewellery
+[6702/7081] 101367: Nhẫn nam Vandross
+[6703/7081] 99509: Nhẫn Nam Sense Dot 10 mm
+[6731/7081] 109001: Nhẫn cưới nữ Magic Truth 5 mm
+[6734/7081] 105095: GLAMIRA - Your Online Shop for Gold, Diamond and Wedding Jewellery
+[6771/7081] 103459: GLAMIRA Ring Alandris
+[6803/7081] 109671: GLAMIRA Ring Eily
+[6851/7081] 93424: Classic Power 7mm
+[6878/7081] 85187: Nhẫn cưới nam Charming Cloud
+[6961/7081] 101735: Nhẫn nam Anivarth
+[6966/7081] 101818: Women's Ring Eternal Safety
+[7006/7081] 98428: GLAMIRA Ring Edessa
+[7038/7081] 99443: Kadın Yüzük Universe Neptune 10 mm
+[7060/7081] 102463: Women's Bracelet Negeen
+
+Hoàn thành! Errors: 6891
+Kết quả lưu tại: /home/g8a1_nguyenminhdat31122005/products_final.csv
