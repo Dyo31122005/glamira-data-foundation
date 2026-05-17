@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: glamira_raw
+    database: project-5-unigap
+    schema: glamira_raw
+    tables:
+      - name: glamira_events
+        description: "Raw Glamira events 41M rows Oct-Nov 2019"
+      - name: ip_location
+        description: "IP geolocation data 3.2M unique IPs"
+      - name: product_react_data_eu
+        description: "Product react_data crawled from Glamira EU store"

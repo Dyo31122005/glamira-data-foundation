@@ -1,0 +1,99 @@
+version: 2
+
+models:
+  - name: dim_customer
+    description: "Customer dimension table with PII masked. One row per unique device."
+    columns:
+      - name: customer_key
+        description: "Surrogate key for customer"
+        tests:
+          - not_null
+          - unique
+      - name: device_id
+        description: "Device identifier (natural key)"
+        tests:
+          - not_null
+      - name: ip_hashed
+        description: "MD5 hashed IP address (PII masked)"
+      - name: email_hashed
+        description: "MD5 hashed email address (PII masked)"
+      - name: has_email
+        description: "Boolean flag indicating if customer provided email"
+
+  - name: dim_product
+    description: "Product dimension table sourced from Glamira EU store react_data"
+    columns:
+      - name: product_key
+        description: "Surrogate key for product"
+        tests:
+          - not_null
+          - unique
+      - name: product_id
+        description: "Natural key from Glamira product catalog"
+        tests:
+          - not_null
+      - name: product_type
+        description: "Standardized product type in English (ring, pendant, earring...)"
+      - name: gender
+        description: "Target gender: Women, Men, Unisex"
+
+  - name: dim_date
+    description: "Date dimension covering Apr 2020 - Mar 2021"
+    columns:
+      - name: date_key
+        description: "Integer date key in YYYYMMDD format"
+        tests:
+          - not_null
+          - unique
+      - name: is_weekend
+        description: "Boolean flag for weekend days"
+
+  - name: dim_location
+    description: "Geographic dimension from IP geolocation data"
+    columns:
+      - name: location_key
+        description: "Surrogate key for location"
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_store
+    description: "Store dimension derived from checkout URLs"
+    columns:
+      - name: store_key
+        description: "Surrogate key for store"
+        tests:
+          - not_null
+          - unique
+      - name: store_country
+        description: "Country name mapped from store domain"
+
+  - name: fact_sales_order_detail
+    description: "Fact table for sales orders. One row per product per order."
+    columns:
+      - name: event_id
+        description: "MongoDB event ID"
+        tests:
+          - not_null
+      - name: order_id
+        description: "Order identifier"
+        tests:
+          - not_null
+      - name: customer_key
+        description: "Foreign key to dim_customer"
+        tests:
+          - not_null
+      - name: product_key
+        description: "Foreign key to dim_product (-1 if not found)"
+        tests:
+          - not_null
+      - name: order_qty
+        description: "Quantity of product ordered"
+      - name: sales_amount
+        description: "Order amount in local currency (not normalized to single currency)"
+      - name: currency
+        description: "Local currency code"
+      - name: alloy_name
+        description: "Metal/alloy selected (e.g. 14K White Gold)"
+      - name: stone_name
+        description: "Stone/diamond selected (e.g. Diamond, Sapphire)"

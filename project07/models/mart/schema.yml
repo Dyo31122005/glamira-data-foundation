@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: mart_revenue_summary
+    description: "Revenue summary aggregated by date, product, location and store"
+    columns:
+      - name: order_date
+        description: "Order date"
+      - name: total_orders
+        description: "Count of distinct orders"
+      - name: total_quantity
+        description: "Total quantity of items ordered"
+      - name: total_sales_amount
+        description: "Total sales amount in local currency (not normalized)"
+      - name: currency_name
+        description: "Full currency name"
+
+  - name: mart_geographic_distribution
+    description: "Orders distribution by geography"
+    columns:
+      - name: country_name
+        description: "Country name"
+      - name: total_orders
+        description: "Count of distinct orders"
+      - name: unique_customers
+        description: "Count of distinct customers"
+
+  - name: mart_product_performance
+    description: "Product performance metrics"
+    columns:
+      - name: product_id
+        description: "Product natural key"
+      - name: product_name
+        description: "Product name"
+      - name: total_orders
+        description: "Count of distinct orders"
+      - name: total_sales_amount
+        description: "Total sales in local currency"
+
+  - name: mart_time_trends
+    description: "Time-based order trends"
+    columns:
+      - name: order_date
+        description: "Order date"
+      - name: total_orders
+        description: "Count of distinct orders"
+      - name: is_weekend
+        description: "Boolean flag for weekend"
