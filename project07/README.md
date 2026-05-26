@@ -46,10 +46,6 @@ project07/
 │       ├── mart_geographic_distribution.sql
 │       ├── mart_product_performance.sql
 │       └── mart_time_trends.sql
-├── analyses/
-├── macros/
-├── snapshots/
-└── tests/
 
 ## Data Models
 
