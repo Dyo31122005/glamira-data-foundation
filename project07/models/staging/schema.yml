@@ -2,9 +2,10 @@ version: 2
 
 models:
   - name: stg_events_checkout_success
-    description: "Checkout success events with cart products unpivoted"
+    description: "Checkout success events with cart products unpivoted. One row per product per event."
     columns:
       - name: event_id
+        description: "MongoDB event ID - not unique after unnesting cart products"
         tests:
           - not_null
       - name: order_id
@@ -13,7 +14,7 @@ models:
       - name: product_id
         tests:
           - not_null
-      - name: order_qty
+      - name: quantity
         tests:
           - not_null
 

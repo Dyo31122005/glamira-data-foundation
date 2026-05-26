@@ -17,20 +17,18 @@ SELECT
     ,p.product_type
     ,p.gender
     ,p.collection_name
-    ,p.base_price
-    ,p.min_price
-    ,p.max_price
-    ,fact.alloy_name AS metal_type
-    ,fact.stone_name AS stone_type
+    ,fact.alloy_name
+    ,fact.stone_name
     ,d.year
     ,d.month
     ,d.month_name
-    ,COUNT(DISTINCT fact.order_id) AS total_orders
-    ,SUM(fact.order_qty) AS total_quantity
-    ,ROUND(SUM(fact.sales_amount), 2) AS total_sales_amount
+    ,COUNT(DISTINCT fact.order_id)        AS total_orders
+    ,SUM(fact.quantity)                   AS total_quantity
+    ,ROUND(SUM(fact.sales_amount_eur), 2) AS total_sales_amount_eur
+    ,ROUND(AVG(fact.sales_amount_eur), 2) AS avg_sale_price_eur
 FROM fact
 LEFT JOIN dim_product p ON fact.product_key = p.product_key
-LEFT JOIN dim_date d ON fact.date_key = d.date_key
+LEFT JOIN dim_date d    ON fact.date_key    = d.date_key
 WHERE p.product_id IS NOT NULL
-GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14
+GROUP BY 1,2,3,4,5,6,7,8,9,10,11
 ORDER BY total_orders DESC

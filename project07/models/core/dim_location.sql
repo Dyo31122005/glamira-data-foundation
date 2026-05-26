@@ -14,4 +14,6 @@ SELECT
     ,country_name
     ,region_name
     ,city_name
+    ,CURRENT_TIMESTAMP() AS created_at
+    ,CURRENT_TIMESTAMP() AS updated_at
 FROM source

@@ -17,17 +17,13 @@ WITH source AS (
         ,local_time
         ,current_url
         ,JSON_VALUE(cp, '$.product_id') AS product_id
-        ,CAST(JSON_VALUE(cp, '$.amount') AS INT64) AS order_qty
+        ,CAST(JSON_VALUE(cp, '$.amount') AS INT64) AS quantity
         ,JSON_VALUE(cp, '$.price') AS price_raw
-        ,JSON_VALUE(cp, '$.currency') AS currency
+        ,NULLIF(TRIM(JSON_VALUE(cp, '$.currency')), '') AS currency_raw
         ,MAX(CASE WHEN JSON_VALUE(opt, '$.option_label') = 'alloy'
             THEN JSON_VALUE(opt, '$.value_label') END) AS alloy_name
-        ,MAX(CASE WHEN JSON_VALUE(opt, '$.option_label') = 'alloy'
-            THEN JSON_VALUE(opt, '$.value_id') END) AS alloy_id
         ,MAX(CASE WHEN JSON_VALUE(opt, '$.option_label') = 'diamond'
             THEN JSON_VALUE(opt, '$.value_label') END) AS stone_name
-        ,MAX(CASE WHEN JSON_VALUE(opt, '$.option_label') = 'diamond'
-            THEN JSON_VALUE(opt, '$.value_id') END) AS stone_id
     FROM source
     CROSS JOIN UNNEST(JSON_QUERY_ARRAY(cart_products, '$')) AS cp
     CROSS JOIN UNNEST(JSON_QUERY_ARRAY(cp, '$.option')) AS opt
@@ -41,15 +37,16 @@ WITH source AS (
         ,ip
         ,device_id
         ,NULLIF(TRIM(email_address), '') AS email_address
-        ,store_id
+        ,CAST(store_id AS STRING) AS store_id
         ,event_timestamp
         ,DATE(event_timestamp) AS order_date
         ,local_time
         ,current_url
         ,product_id
-        ,order_qty
-        ,NULLIF(TRIM(currency), '') AS currency
-        ,CASE NULLIF(TRIM(currency), '')
+        ,quantity
+        -- Fallback null currency về € (EU store, European price format)
+        ,COALESCE(currency_raw, '€') AS currency
+        ,CASE COALESCE(currency_raw, '€')
             WHEN '€'       THEN 'Euro'
             WHEN '£'       THEN 'British Pound'
             WHEN '$'       THEN 'US Dollar'
@@ -70,7 +67,7 @@ WITH source AS (
             WHEN 'COP $'   THEN 'Colombian Peso'
             WHEN 'PEN S/.' THEN 'Peruvian Sol'
             WHEN '₱'       THEN 'Philippine Peso'
-            WHEN ' din.'   THEN 'Serbian Dinar'
+            WHEN 'din.'    THEN 'Serbian Dinar'
             WHEN 'HKD $'   THEN 'Hong Kong Dollar'
             WHEN '₫'       THEN 'Vietnamese Dong'
             WHEN 'GTQ Q'   THEN 'Guatemalan Quetzal'
@@ -84,25 +81,22 @@ WITH source AS (
             WHEN 'DOP $'   THEN 'Dominican Peso'
             WHEN 'BOB Bs'  THEN 'Bolivian Boliviano'
             WHEN 'R$'      THEN 'Brazilian Real'
+            WHEN 'د.ك.‏'   THEN 'Kuwaiti Dinar'
             ELSE 'Unknown'
         END AS currency_name
         ,alloy_name
-        ,alloy_id
         ,stone_name
-        ,stone_id
         ,CASE
             WHEN REGEXP_CONTAINS(price_raw, r"'")
                 THEN CAST(REGEXP_REPLACE(price_raw, r"'", '') AS FLOAT64)
             WHEN REGEXP_CONTAINS(price_raw, r'\d,\d{2}$')
-                THEN CAST(
-                    REGEXP_REPLACE(
+                THEN CAST(REGEXP_REPLACE(
                         REGEXP_REPLACE(price_raw, r'\.', ''),
                     r',', '.') AS FLOAT64)
             WHEN REGEXP_CONTAINS(price_raw, r'\d\.\d{2}$')
-                THEN CAST(
-                    REGEXP_REPLACE(price_raw, r',', '') AS FLOAT64)
+                THEN CAST(REGEXP_REPLACE(price_raw, r',', '') AS FLOAT64)
             ELSE NULL
-        END AS sales_amount
+        END AS sale_price
     FROM unnested
     WHERE product_id IS NOT NULL
 )
