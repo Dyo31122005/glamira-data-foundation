@@ -21,31 +21,31 @@ glamira_raw (BigQuery)
 | BigQuery Mart | glamira_dbt_mart |
 
 ## Project Structure
-project07/
-├── dbt_project.yml
-├── seeds/
-│   └── exchange_rate_to_eur.csv   # 35 currencies → EUR (Oct-Nov 2019 rates)
-├── models/
-│   ├── staging/                   # Views: clean & normalize raw data
-│   │   ├── sources.yml
-│   │   ├── schema.yml
-│   │   ├── stg_events_checkout_success.sql
-│   │   ├── stg_ip_location.sql
-│   │   └── stg_products.sql
-│   ├── core/                      # Tables: dims + fact
-│   │   ├── schema.yml
-│   │   ├── dim_customer.sql
-│   │   ├── dim_date.sql
-│   │   ├── dim_location.sql
-│   │   ├── dim_product.sql
-│   │   ├── dim_store.sql
-│   │   └── fact_sales_order_detail.sql
-│   └── mart/                      # Tables: aggregated for BI
-│       ├── schema.yml
-│       ├── mart_revenue_summary.sql
-│       ├── mart_geographic_distribution.sql
-│       ├── mart_product_performance.sql
-│       └── mart_time_trends.sql
+
+- **dbt_project.yml** — dbt project configuration
+- **seeds/**
+  - `exchange_rate_to_eur.csv` — 35 currencies → EUR (Oct-Nov 2019 rates)
+- **models/**
+  - **staging/** — Views: clean & normalize raw data
+    - `sources.yml`
+    - `schema.yml`
+    - `stg_events_checkout_success.sql`
+    - `stg_ip_location.sql`
+    - `stg_products.sql`
+  - **core/** — Tables: dims + fact
+    - `schema.yml`
+    - `dim_customer.sql`
+    - `dim_date.sql`
+    - `dim_location.sql`
+    - `dim_product.sql`
+    - `dim_store.sql`
+    - `fact_sales_order_detail.sql`
+  - **mart/** — Tables: aggregated for BI
+    - `schema.yml`
+    - `mart_revenue_summary.sql`
+    - `mart_geographic_distribution.sql`
+    - `mart_product_performance.sql`
+    - `mart_time_trends.sql`
 
 ## Data Models
 
