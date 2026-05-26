@@ -26,3 +26,50 @@ models:
     mart:
       +schema: mart
       +materialized: table
+
+seeds:
+  glamira_dbt:
+    +schema: seeds
+    exchange_rate_to_eur:
+      +column_types:
+        currency: string
+        currency_name: string
+        rate_to_eur: float64
+EOFcat > ~/glamira-data-foundation/project07/dbt_project.yml << 'EOF'
+name: 'glamira_dbt'
+version: '1.0.0'
+config-version: 2
+
+profile: 'glamira_dbt'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  glamira_dbt:
+    staging:
+      +schema: staging
+      +materialized: view
+    core:
+      +schema: core
+      +materialized: table
+    mart:
+      +schema: mart
+      +materialized: table
+
+seeds:
+  glamira_dbt:
+    +schema: seeds
+    exchange_rate_to_eur:
+      +column_types:
+        currency: string
+        currency_name: string
+        rate_to_eur: float64
