@@ -1,0 +1,88 @@
+version: 2
+
+models:
+  - name: stg_events_checkout_success
+    description: "Checkout success events with cart products unpivoted. One row per product per event. Price cleaned from 3 formats (European comma, Anglo dot, Swiss apostrophe). Null currency fallback to EUR."
+    columns:
+      - name: event_id
+        description: "MongoDB event ID — not unique after unnesting cart products."
+        tests:
+          - not_null
+      - name: order_id
+        description: "Order identifier."
+        tests:
+          - not_null
+      - name: ip
+        description: "Raw IP address."
+      - name: device_id
+        description: "Device identifier."
+      - name: email_address
+        description: "Raw email address (PII — masked in downstream models)."
+      - name: store_id
+        description: "Store identifier."
+      - name: event_timestamp
+        description: "Event timestamp converted from Unix epoch."
+      - name: order_date
+        description: "Date extracted from event_timestamp."
+      - name: local_time
+        description: "Local time of the order."
+      - name: current_url
+        description: "Checkout URL."
+      - name: product_id
+        description: "Product ID from cart."
+        tests:
+          - not_null
+      - name: quantity
+        description: "Quantity of product ordered."
+        tests:
+          - not_null
+      - name: currency
+        description: "Currency symbol. Null values fallback to EUR."
+      - name: alloy_name
+        description: "Metal/alloy option label."
+      - name: stone_name
+        description: "Stone/diamond option label."
+      - name: sale_price
+        description: "Cleaned unit price as FLOAT64."
+
+  - name: stg_ip_location
+    description: "IP geolocation data. One row per unique IP address."
+    columns:
+      - name: ip
+        description: "IP address — natural key."
+        tests:
+          - not_null
+          - unique
+      - name: country_code
+        description: "ISO 2-letter country code, uppercased and trimmed."
+      - name: country_name
+        description: "Full country name, trimmed."
+      - name: region_name
+        description: "Region name, trimmed."
+      - name: city_name
+        description: "City name, trimmed."
+
+  - name: stg_products
+    description: "Product data from product_react_data_eu. JSON fields extracted and cast."
+    columns:
+      - name: product_id
+        description: "Product natural key."
+        tests:
+          - not_null
+          - unique
+      - name: product_name
+        description: "Product display name from react_data JSON."
+      - name: category_name
+        description: "Product category."
+      - name: product_type
+        description: "Product type (raw, standardized in dim_product)."
+      - name: base_price
+        description: "Base price as FLOAT64."
+      - name: min_price
+        description: "Minimum price as FLOAT64."
+      - name: max_price
+        description: "Maximum price as FLOAT64."
+      - name: collection_name
+        description: "Collection name."
+      - name: gender
+        description: "Target gender (raw value, standardized in dim_product)."

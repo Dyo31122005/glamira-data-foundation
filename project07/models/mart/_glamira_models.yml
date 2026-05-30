@@ -1,0 +1,130 @@
+version: 2
+
+models:
+  - name: mart_revenue_summary
+    description: "Revenue summary aggregated by date, product, location, store and currency. Use total_sales_amount_eur for cross-currency comparison."
+    columns:
+      - name: order_date
+        description: "Order date."
+      - name: year
+        description: "Calendar year."
+      - name: month
+        description: "Month number (1-12)."
+      - name: month_name
+        description: "Full month name."
+      - name: category_name
+        description: "Product category."
+      - name: product_type
+        description: "Product type."
+      - name: gender
+        description: "Target gender."
+      - name: country_name
+        description: "Customer country from IP geolocation."
+      - name: store_country
+        description: "Store country from checkout URL."
+      - name: currency
+        description: "Local currency symbol."
+      - name: currency_name
+        description: "Full currency name."
+      - name: alloy_name
+        description: "Metal/alloy type."
+      - name: stone_name
+        description: "Stone/diamond type."
+      - name: total_orders
+        description: "Count of distinct orders (additive)."
+      - name: total_line_items
+        description: "Count of all line items (additive)."
+      - name: total_quantity
+        description: "Total quantity ordered (additive)."
+      - name: total_sales_amount
+        description: "Total sales in local currency (additive within same currency only)."
+      - name: total_sales_amount_eur
+        description: "Total sales converted to EUR (additive across all currencies)."
+      - name: avg_order_value_eur
+        description: "Average order value in EUR (non-additive)."
+
+  - name: mart_geographic_distribution
+    description: "Orders distribution by country, region and city."
+    columns:
+      - name: country_code
+        description: "ISO 2-letter country code."
+      - name: country_name
+        description: "Full country name."
+      - name: region_name
+        description: "Region name."
+      - name: city_name
+        description: "City name."
+      - name: total_orders
+        description: "Count of distinct orders (additive)."
+      - name: unique_customers
+        description: "Count of distinct customers (semi-additive)."
+      - name: total_line_items
+        description: "Count of all line items (additive)."
+      - name: total_quantity
+        description: "Total quantity ordered (additive)."
+      - name: total_sales_amount_eur
+        description: "Total sales in EUR (additive)."
+
+  - name: mart_product_performance
+    description: "Product performance metrics by type, category, metal and stone."
+    columns:
+      - name: product_id
+        description: "Product natural key."
+      - name: product_name
+        description: "Product display name."
+      - name: category_name
+        description: "Product category."
+      - name: product_type
+        description: "Product type."
+      - name: gender
+        description: "Target gender."
+      - name: collection_name
+        description: "Collection name."
+      - name: alloy_name
+        description: "Metal/alloy type."
+      - name: stone_name
+        description: "Stone/diamond type."
+      - name: year
+        description: "Calendar year."
+      - name: month
+        description: "Month number."
+      - name: month_name
+        description: "Full month name."
+      - name: total_orders
+        description: "Count of distinct orders (additive)."
+      - name: total_quantity
+        description: "Total quantity ordered (additive)."
+      - name: total_sales_amount_eur
+        description: "Total sales in EUR (additive)."
+      - name: avg_sale_price_eur
+        description: "Average sale price in EUR (non-additive)."
+
+  - name: mart_time_trends
+    description: "Time-based order trends by date, day, store and currency."
+    columns:
+      - name: order_date
+        description: "Order date."
+      - name: year
+        description: "Calendar year."
+      - name: month
+        description: "Month number."
+      - name: month_name
+        description: "Full month name."
+      - name: day_name
+        description: "Full day name."
+      - name: is_weekend
+        description: "True if Saturday or Sunday."
+      - name: store_country
+        description: "Store country."
+      - name: currency
+        description: "Local currency symbol."
+      - name: currency_name
+        description: "Full currency name."
+      - name: total_orders
+        description: "Count of distinct orders (additive)."
+      - name: unique_customers
+        description: "Count of distinct customers (semi-additive)."
+      - name: total_quantity
+        description: "Total quantity ordered (additive)."
+      - name: total_sales_amount_eur
+        description: "Total sales in EUR (additive)."

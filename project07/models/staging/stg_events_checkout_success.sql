@@ -1,11 +1,11 @@
-WITH source AS (
+WITH stg_events__source AS (
     SELECT *
     FROM {{ source('glamira_raw', 'glamira_events') }}
     WHERE collection = 'checkout_success'
         AND cart_products IS NOT NULL
 )
 
-,unnested AS (
+,stg_events__unnest AS (
     SELECT
         _id AS event_id
         ,order_id
@@ -24,13 +24,13 @@ WITH source AS (
             THEN JSON_VALUE(opt, '$.value_label') END) AS alloy_name
         ,MAX(CASE WHEN JSON_VALUE(opt, '$.option_label') = 'diamond'
             THEN JSON_VALUE(opt, '$.value_label') END) AS stone_name
-    FROM source
+    FROM stg_events__source
     CROSS JOIN UNNEST(JSON_QUERY_ARRAY(cart_products, '$')) AS cp
     CROSS JOIN UNNEST(JSON_QUERY_ARRAY(cp, '$.option')) AS opt
     GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13
 )
 
-,cleaned AS (
+,stg_events__rename AS (
     SELECT
         event_id
         ,REGEXP_REPLACE(order_id, r'\.0$', '') AS order_id
@@ -44,48 +44,31 @@ WITH source AS (
         ,current_url
         ,product_id
         ,quantity
-        -- Fallback null currency về € (EU store, European price format)
         ,COALESCE(currency_raw, '€') AS currency
-        ,CASE COALESCE(currency_raw, '€')
-            WHEN '€'       THEN 'Euro'
-            WHEN '£'       THEN 'British Pound'
-            WHEN '$'       THEN 'US Dollar'
-            WHEN 'kr'      THEN 'Scandinavian Krone'
-            WHEN 'CHF'     THEN 'Swiss Franc'
-            WHEN 'AU $'    THEN 'Australian Dollar'
-            WHEN 'CAD $'   THEN 'Canadian Dollar'
-            WHEN 'Kč'      THEN 'Czech Koruna'
-            WHEN 'Ft'      THEN 'Hungarian Forint'
-            WHEN 'zł'      THEN 'Polish Zloty'
-            WHEN 'MXN $'   THEN 'Mexican Peso'
-            WHEN 'SGD $'   THEN 'Singapore Dollar'
-            WHEN 'CLP'     THEN 'Chilean Peso'
-            WHEN 'лв.'     THEN 'Bulgarian Lev'
-            WHEN 'kn'      THEN 'Croatian Kuna'
-            WHEN 'NZD $'   THEN 'New Zealand Dollar'
-            WHEN '₺'       THEN 'Turkish Lira'
-            WHEN 'COP $'   THEN 'Colombian Peso'
-            WHEN 'PEN S/.' THEN 'Peruvian Sol'
-            WHEN '₱'       THEN 'Philippine Peso'
-            WHEN 'din.'    THEN 'Serbian Dinar'
-            WHEN 'HKD $'   THEN 'Hong Kong Dollar'
-            WHEN '₫'       THEN 'Vietnamese Dong'
-            WHEN 'GTQ Q'   THEN 'Guatemalan Quetzal'
-            WHEN 'Lei'     THEN 'Romanian Leu'
-            WHEN 'CRC ₡'   THEN 'Costa Rican Colon'
-            WHEN 'USD $'   THEN 'US Dollar'
-            WHEN '￥'       THEN 'Japanese Yen'
-            WHEN '₹'       THEN 'Indian Rupee'
-            WHEN 'UYU'     THEN 'Uruguayan Peso'
-            WHEN '₲'       THEN 'Paraguayan Guarani'
-            WHEN 'DOP $'   THEN 'Dominican Peso'
-            WHEN 'BOB Bs'  THEN 'Bolivian Boliviano'
-            WHEN 'R$'      THEN 'Brazilian Real'
-            WHEN 'د.ك.‏'   THEN 'Kuwaiti Dinar'
-            ELSE 'Unknown'
-        END AS currency_name
         ,alloy_name
         ,stone_name
+        ,price_raw
+    FROM stg_events__unnest
+    WHERE product_id IS NOT NULL
+)
+
+,stg_events__cast_type AS (
+    SELECT
+        CAST(event_id AS STRING) AS event_id
+        ,CAST(order_id AS STRING) AS order_id
+        ,CAST(ip AS STRING) AS ip
+        ,CAST(device_id AS STRING) AS device_id
+        ,CAST(email_address AS STRING) AS email_address
+        ,CAST(store_id AS STRING) AS store_id
+        ,CAST(event_timestamp AS TIMESTAMP) AS event_timestamp
+        ,CAST(order_date AS DATE) AS order_date
+        ,CAST(local_time AS TIMESTAMP) AS local_time
+        ,CAST(current_url AS STRING) AS current_url
+        ,CAST(product_id AS STRING) AS product_id
+        ,CAST(quantity AS INT64) AS quantity
+        ,CAST(currency AS STRING) AS currency
+        ,CAST(alloy_name AS STRING) AS alloy_name
+        ,CAST(stone_name AS STRING) AS stone_name
         ,CASE
             WHEN REGEXP_CONTAINS(price_raw, r"'")
                 THEN CAST(REGEXP_REPLACE(price_raw, r"'", '') AS FLOAT64)
@@ -97,9 +80,8 @@ WITH source AS (
                 THEN CAST(REGEXP_REPLACE(price_raw, r',', '') AS FLOAT64)
             ELSE NULL
         END AS sale_price
-    FROM unnested
-    WHERE product_id IS NOT NULL
+    FROM stg_events__rename
 )
 
 SELECT *
-FROM cleaned
+FROM stg_events__cast_type
