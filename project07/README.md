@@ -5,7 +5,7 @@ Data transformation pipeline for Glamira e-commerce analytics using dbt + BigQue
 ## Architecture
 glamira_raw (BigQuery)
 ↓ staging layer  (views)
-↓ core layer     (tables: dims + fact)
+↓ core layer     (tables: dims + facts)
 ↓ mart layer     (tables: aggregated for BI)
 ↓ Looker Studio Dashboards
 
@@ -15,7 +15,6 @@ glamira_raw (BigQuery)
 |---|---|
 | GCP Project | project-5-unigap |
 | Region | asia-southeast1 (Singapore) |
-| dbt Dataset | glamira_dbt |
 | BigQuery Staging | glamira_dbt_staging |
 | BigQuery Core | glamira_dbt_core |
 | BigQuery Mart | glamira_dbt_mart |
@@ -23,25 +22,28 @@ glamira_raw (BigQuery)
 ## Project Structure
 
 - **dbt_project.yml** — dbt project configuration
+- **packages.yml** — external packages (dbt_utils, dbt_expectations)
 - **seeds/**
-  - `exchange_rate_to_eur.csv` — 35 currencies → EUR (Oct-Nov 2019 rates)
+  - `exchange_rate_to_eur.csv` — 35 currencies → EUR fixed rates (Apr 2020)
 - **models/**
   - **staging/** — Views: clean & normalize raw data
-    - `sources.yml`
-    - `schema.yml`
+    - `_sources.yml`
+    - `_glamira_models.yml`
     - `stg_events_checkout_success.sql`
     - `stg_ip_location.sql`
     - `stg_products.sql`
-  - **core/** — Tables: dims + fact
-    - `schema.yml`
+  - **core/** — Tables: dims + facts
+    - `_glamira_models.yml`
     - `dim_customer.sql`
     - `dim_date.sql`
     - `dim_location.sql`
     - `dim_product.sql`
     - `dim_store.sql`
+    - `dim_currency.sql`
     - `fact_sales_order_detail.sql`
+    - `fact_exchange_rate.sql`
   - **mart/** — Tables: aggregated for BI
-    - `schema.yml`
+    - `_glamira_models.yml`
     - `mart_revenue_summary.sql`
     - `mart_geographic_distribution.sql`
     - `mart_product_performance.sql`
@@ -56,15 +58,21 @@ glamira_raw (BigQuery)
 | stg_ip_location | view | IP geolocation data |
 | stg_products | view | Product data from product_react_data_eu |
 
-### Core
+### Core — Dimensions
 | Model | Materialization | Description |
 |---|---|---|
-| dim_customer | table | Customer dimension — 1 row per device_id, PII masked |
+| dim_customer | table | Customer dimension — SCD Type 2, PII masked |
 | dim_product | table | Product dimension — name, type, category, price range |
 | dim_date | table | Date dimension Apr 2020 - Mar 2021 |
 | dim_location | table | Geographic dimension from IP geolocation |
-| dim_store | table | Store dimension from checkout URLs — 65 stores, 50+ countries |
-| fact_sales_order_detail | table | Fact table — 1 row per product per order |
+| dim_store | table | Store dimension — 65 stores, 50+ countries |
+| dim_currency | table | Currency dimension — 35 currencies |
+
+### Core — Facts
+| Model | Materialization | Description |
+|---|---|---|
+| fact_sales_order_detail | incremental (merge) | 1 row per product per order |
+| fact_exchange_rate | table | Fixed exchange rates → EUR |
 
 ### Mart
 | Model | Materialization | Description |
@@ -76,15 +84,62 @@ glamira_raw (BigQuery)
 
 ## Key Features
 
+### CTE Naming Convention
+Each model follows a structured CTE pattern:
+- `__source` → read from source
+- `__rename` → rename columns
+- `__cast_type` → cast data types
+- `__gen_key` → generate surrogate keys (FARM_FINGERPRINT)
+- `__get_distinct` → deduplicate
+- `__add_default_values` → add UNKNOWN row (-1)
+
+### Surrogate Keys
+All dims use `FARM_FINGERPRINT` for stable, deterministic keys:
+```sql
+FARM_FINGERPRINT(country_code || '|' || region_name || '|' || city_name) AS location_key
+```
+
+### UNKNOWN Rows
+All dims include a default `-1` UNKNOWN row for unmatched fact records:
+```sql
+UNION ALL
+SELECT -1 AS location_key, 'UNKNOWN' AS country_code, ...
+```
+
+### SCD Type 2 — dim_customer
+Tracks customer changes over time:
+- `effective_date` — when record became active
+- `expiry_date` — when record expired (9999-12-31 = current)
+- `is_current` — TRUE if currently active
+
 ### Exchange Rate
-- Seed file with 35 currencies converted to EUR (Oct-Nov 2019 fixed rates)
-- `sales_amount_eur` added to fact table for cross-currency comparison
-- Null currency fallback to EUR (EU store default)
+- Seed file with 35 currencies → EUR (Apr 2020 fixed rates)
+- `fact_exchange_rate` stores rates keyed by `currency_key`
+- Mart models JOIN `fact_exchange_rate` to compute `sales_amount_eur`
+
+### Incremental Fact
+`fact_sales_order_detail` uses incremental merge strategy:
+```sql
+config(
+    materialized='incremental',
+    incremental_strategy='merge',
+    unique_key='sales_order_detail_key',
+    on_schema_change='append_new_columns'
+)
+```
 
 ### PII Masking
-- `ip` → `ip_hashed` (MD5) in dim_customer
 - `email_address` → `email_hashed` (MD5) in dim_customer
+- `ip` → `ip_hashed` (MD5) in fact_sales_order_detail
 - Raw PII not exposed in fact/mart layers
+
+### Schema Contract
+All core models enforce schema contracts:
+```yaml
+config:
+  contract:
+    enforced: true
+```
 
 ## Data Quality
 
@@ -95,11 +150,22 @@ glamira_raw (BigQuery)
 | dim_location | 100% | ✅ |
 | dim_store | 100% | ✅ |
 | dim_date | 100% | ✅ |
-| dim_product | 79.78% | ⚠️ 20.22% missing — crawler Access Denied at source |
+| dim_currency | 100% | ✅ |
+| dim_product | 100% | ✅ Unmatched products → UNKNOWN row (-1) |
 
 ### dbt Tests
-- 29 data tests (not_null, unique)
-- All 29 tests passing
+- 34 data tests (not_null, unique)
+- All 34 tests passing
+
+## Packages
+
+```yaml
+packages:
+  - package: metaplane/dbt_expectations
+    version: 0.10.10
+  - package: dbt-labs/dbt_utils
+    version: 1.3.3
+```
 
 ## Setup
 
@@ -107,15 +173,19 @@ glamira_raw (BigQuery)
 # Activate environment
 source ~/glamira-env/bin/activate
 
-# Configure
+# Install packages
 cd project07
+dbt deps
+
+# Configure
 dbt debug
 
 # Run
-dbt seed          # load exchange rate
-dbt run           # build all models
-dbt test          # run 29 tests
-dbt docs generate # generate documentation
+dbt seed                                        # load exchange rate
+dbt run --full-refresh                          # full build all models
+dbt run                                         # incremental run
+dbt test                                        # run 34 tests
+dbt docs generate                               # generate documentation
 ```
 
 ## Dashboards
