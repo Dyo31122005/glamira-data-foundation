@@ -35,17 +35,19 @@ WITH fact_sales__source AS (
             COALESCE(o.sale_price, 0) * COALESCE(o.quantity, 0)
          AS NUMERIC)                    AS sales_amount
     FROM fact_sales__source o
+    -- dims có UNKNOWN row → JOIN được hết
     JOIN {{ ref('dim_customer') }} c
         ON o.device_id = c.device_id
         AND c.is_current = TRUE
-    JOIN {{ ref('dim_product') }} p
+    -- dim_product không có tất cả products → LEFT JOIN
+    LEFT JOIN {{ ref('dim_product') }} p
         ON o.product_id = p.product_id
-    JOIN {{ ref('stg_ip_location') }} il
+    LEFT JOIN {{ ref('stg_ip_location') }} il
         ON o.ip = il.ip
     JOIN {{ ref('dim_location') }} l
-        ON il.country_code = l.country_code
-        AND il.region_name = l.region_name
-        AND il.city_name = l.city_name
+        ON COALESCE(il.country_code, 'UNKNOWN') = l.country_code
+        AND COALESCE(il.region_name, 'UNKNOWN') = l.region_name
+        AND COALESCE(il.city_name, 'UNKNOWN') = l.city_name
     JOIN {{ ref('dim_store') }} s
         ON o.store_id = s.store_id
     JOIN {{ ref('dim_currency') }} cur
