@@ -1,11 +1,11 @@
-WITH stg_events__source AS (
+WITH stg_fact_sales__source AS (
     SELECT *
     FROM {{ source('glamira_raw', 'glamira_events') }}
     WHERE collection = 'checkout_success'
         AND cart_products IS NOT NULL
 )
 
-,stg_events__unnest AS (
+,stg_fact_sales__unnest AS (
     SELECT
         _id AS event_id
         ,order_id
@@ -24,13 +24,13 @@ WITH stg_events__source AS (
             THEN JSON_VALUE(opt, '$.value_label') END) AS alloy_name
         ,MAX(CASE WHEN JSON_VALUE(opt, '$.option_label') = 'diamond'
             THEN JSON_VALUE(opt, '$.value_label') END) AS stone_name
-    FROM stg_events__source
+    FROM stg_fact_sales__source
     CROSS JOIN UNNEST(JSON_QUERY_ARRAY(cart_products, '$')) AS cp
     CROSS JOIN UNNEST(JSON_QUERY_ARRAY(cp, '$.option')) AS opt
     GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13
 )
 
-,stg_events__rename AS (
+,stg_fact_sales__rename AS (
     SELECT
         event_id
         ,REGEXP_REPLACE(order_id, r'\.0$', '') AS order_id
@@ -48,11 +48,11 @@ WITH stg_events__source AS (
         ,alloy_name
         ,stone_name
         ,price_raw
-    FROM stg_events__unnest
+    FROM stg_fact_sales__unnest
     WHERE product_id IS NOT NULL
 )
 
-,stg_events__cast_type AS (
+,stg_fact_sales__cast_type AS (
     SELECT
         CAST(event_id AS STRING) AS event_id
         ,CAST(order_id AS STRING) AS order_id
@@ -80,8 +80,8 @@ WITH stg_events__source AS (
                 THEN CAST(REGEXP_REPLACE(price_raw, r',', '') AS FLOAT64)
             ELSE NULL
         END AS sale_price
-    FROM stg_events__rename
+    FROM stg_fact_sales__rename
 )
 
 SELECT *
-FROM stg_events__cast_type
+FROM stg_fact_sales__cast_type

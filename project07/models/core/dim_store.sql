@@ -12,8 +12,7 @@ WITH dim_store__source AS (
                 END
             ,current_url
         ) AS rn
-    FROM {{ ref('stg_events_checkout_success') }}
-    WHERE store_id IS NOT NULL
+    FROM {{ ref('stg_dim_store') }}
 )
 
 ,dim_store__rename AS (

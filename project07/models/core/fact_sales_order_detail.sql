@@ -9,10 +9,21 @@
 
 WITH fact_sales__source AS (
     SELECT *
-    FROM {{ ref('stg_events_checkout_success') }}
+    FROM {{ ref('stg_fact_sales') }}
     {% if is_incremental() %}
     WHERE DATE(event_timestamp) >= DATE_ADD(current_date(), INTERVAL -3 DAY)
     {% endif %}
+)
+
+,fact_sales__add_user_id AS (
+    -- JOIN với raw events để lấy USER_ID_DB cho fact rows
+    SELECT
+        f.*
+        ,NULLIF(TRIM(e.USER_ID_DB), '') AS user_id
+        ,LOWER(TRIM(e.email_address))   AS email_normalized
+    FROM fact_sales__source f
+    LEFT JOIN {{ source('glamira_raw', 'glamira_events') }} e
+        ON f.event_id = CAST(e._id AS STRING)
 )
 
 ,fact_sales__join_dims AS (
@@ -34,12 +45,11 @@ WITH fact_sales__source AS (
         ,CAST(
             COALESCE(o.sale_price, 0) * COALESCE(o.quantity, 0)
          AS NUMERIC)                    AS sales_amount
-    FROM fact_sales__source o
-    -- dims có UNKNOWN row → JOIN được hết
-    JOIN {{ ref('dim_customer') }} c
-        ON o.device_id = c.device_id
-        AND c.is_current = TRUE
-    -- dim_product không có tất cả products → LEFT JOIN
+    FROM fact_sales__add_user_id o
+    LEFT JOIN {{ ref('dim_customer') }} c
+        ON o.user_id = c.user_id
+        AND COALESCE(o.email_normalized, 'UNKNOWN') = c.email
+        AND c.is_current = 'Y'
     LEFT JOIN {{ ref('dim_product') }} p
         ON o.product_id = p.product_id
     LEFT JOIN {{ ref('stg_ip_location') }} il
