@@ -223,7 +223,7 @@ models:
         data_type: string
         tests:
           - not_null
-      - name: ip_hashed
+      - name: ip
         data_type: string
       - name: local_time
         data_type: timestamp
