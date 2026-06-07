@@ -103,12 +103,7 @@ Extracts product name from URL pattern — no HTTP requests, no rate limiting.
 | glamira_raw.products_full | 19,417 | Products + URL |
 | glamira_raw.products_final_v2 | 19,417 | Products + name |
 
-## Data Quality
 
-| Check | Expected | Actual |
-|---|---|---|# Glamira Data Foundation
-
-Data collection & storage foundation for Glamira e-commerce analytics (Oct–Nov 2019).
 
 ## Architecture
 
