@@ -37,7 +37,7 @@ WITH fact_sales__source AS (
         ,COALESCE(cur.currency_key, -1) AS currency_key
         ,COALESCE(d.date_key, -1)       AS date_key
         ,COALESCE(o.local_time, TIMESTAMP('3000-01-01')) AS local_time
-        ,COALESCE(o.ip, 'UNKNOWN') AS ip
+        ,COALESCE(o.ip, 'UNKNOWN') AS ip_address
         ,o.alloy_name
         ,o.stone_name
         ,COALESCE(o.quantity, 0)        AS quantity
@@ -93,7 +93,7 @@ SELECT
     ,currency_key
     ,date_key
     ,order_id
-    ,ip
+    ,ip_address
     ,local_time
     ,alloy_name
     ,stone_name
